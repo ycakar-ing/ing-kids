@@ -1,8 +1,8 @@
 import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/saga-orange/theme.css';
-import { ChildDashboard, ChildDashboardTasks } from './child/ChildDashboard';
-import { Button } from 'primereact/button';
+import { ChildDashboard, ChildDashboardTasks, Empty } from './child/ChildDashboard';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { AppHeader, AppFooter } from './common/Main';
 
 const App = () => {
 
@@ -17,6 +17,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<ChildDashboard />} />
           <Route path="/tasks" element={<ChildDashboardTasks />} />
+          <Route path="/empty" element={<Empty />} />
         </Routes>
       </div>
       <AppFooter />
@@ -25,35 +26,7 @@ const App = () => {
 }
 
 
-const AppHeader = () => {
-  const style = {
-    background: 'white',
-    width: '100%',
-    padding: '20px',
-    top: '0',
-  }
-  return (
-    <div style={style}>
-      <Button icon="pi pi-user" rounded />
-    </div>
-  );
-}
 
-
-const AppFooter = () => {
-  const style = {
-    background: 'white',
-    width: '100%',
-    position: 'fixed',
-    bottom: '0',
-    padding: '20px',
-  }
-  return (
-    <div style={style}>
-      App Footer
-    </div>
-  );
-}
 
 
 
