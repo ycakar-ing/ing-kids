@@ -1,7 +1,8 @@
 import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/saga-orange/theme.css';
-import { ChildDashboard } from './child/ChildDashboard'
-import { Button } from 'primereact/button'
+import { ChildDashboard, ChildDashboardTasks } from './child/ChildDashboard';
+import { Button } from 'primereact/button';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 
 const App = () => {
 
@@ -10,13 +11,16 @@ const App = () => {
   }
 
   return (
-    <>
+    <MemoryRouter>
       <AppHeader />
       <div style={style}>
-        <ChildDashboard />
+        <Routes>
+          <Route path="/" element={<ChildDashboard />} />
+          <Route path="/tasks" element={<ChildDashboardTasks />} />
+        </Routes>
       </div>
       <AppFooter />
-    </>
+    </MemoryRouter>
   )
 }
 
