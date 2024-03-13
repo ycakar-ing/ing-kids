@@ -2,7 +2,8 @@ import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/saga-orange/theme.css';
 import { ChildDashboard, ChildDashboardTasks } from './child/ChildDashboard';
 import { Button } from 'primereact/button';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { MemoryRouter, Route, Routes, useNavigate } from 'react-router-dom';
+import { Goals } from './child/Goals';
 
 const App = () => {
 
@@ -17,6 +18,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<ChildDashboard />} />
           <Route path="/tasks" element={<ChildDashboardTasks />} />
+          <Route path="/goals" element={<Goals />} />
         </Routes>
       </div>
       <AppFooter />
@@ -41,6 +43,9 @@ const AppHeader = () => {
 
 
 const AppFooter = () => {
+
+  const naviate = useNavigate();
+
   const style = {
     background: 'white',
     width: '100%',
@@ -50,7 +55,9 @@ const AppFooter = () => {
   }
   return (
     <div style={style}>
-      App Footer
+      <Button icon="pi pi-compass" rounded onClick={(e)=> {
+         naviate('/goals');
+      }}/>
     </div>
   );
 }
