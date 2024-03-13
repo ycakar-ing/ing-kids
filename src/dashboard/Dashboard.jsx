@@ -1,17 +1,10 @@
 import { Card } from 'primereact/card';
 import { useState, useEffect } from 'react';
-import { Knob } from 'primereact/knob';
 import { Divider } from 'primereact/divider';
-import { DataTable } from 'primereact/datatable';
-import { Column } from 'primereact/column';
-import { Button } from 'primereact/button';
-import { useNavigate } from 'react-router-dom';
 import { Chart } from 'primereact/chart';
 import { PERSONAL_EXPENSE, PIGGY_BANK, SOCIAL_EXPENSE } from '../common/Constants';
 
-export const ChildDashboard = () => {
-
-    const naviate = useNavigate();
+export const Dashboard = () => {
 
     const [chartData, setChartData] = useState({});
     const [chartOptions, setChartOptions] = useState({});
@@ -46,24 +39,7 @@ export const ChildDashboard = () => {
                 <Chart type="doughnut" data={chartData} options={chartOptions} />
             </Card>
             <Divider />
-            
-            <Button label='Tasks' onClick={(e) => {
-                naviate('/tasks');
-            }} /> <Button label='Empty' onClick={(e) => {
-                naviate('/empty');
-            }} />
         </>
     )
 }
 
-export const ChildDashboardTasks = () => {
-    return (
-        <p>
-            Tasks
-        </p>
-    )
-}
-
-export const Empty = () => {
-    return(<></>)
-}

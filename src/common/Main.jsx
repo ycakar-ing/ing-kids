@@ -1,6 +1,7 @@
 import { Button } from "primereact/button";
 import logo from "../assets/logo_kid-ing.png"
 import { Divider } from "primereact/divider";
+import { useNavigate } from "react-router-dom";
 
 export const AppHeader = () => {
     const style = {
@@ -16,9 +17,9 @@ export const AppHeader = () => {
     }
     return (
         <div style={style}>
-            <LogoButton icon="pi-user" />
+            <LogoButton icon="pi-user" path="/profile" />
             <img src={logo} style={{ height: '40px' }} />
-            <LogoButton icon="pi-bell" />
+            <LogoButton icon="pi-bell" path="/notifications"/>
         </div>
     );
 }
@@ -40,17 +41,21 @@ export const AppFooter = () => {
     }
     return (
         <div style={style}>
-            <LogoButton icon="pi-check-square" />
-            <LogoButton icon="pi-home" />
-            <LogoButton icon="pi-compass" />
+            <LogoButton icon="pi-check-square" path="/tasks" />
+            <LogoButton icon="pi-home" path="/"/>
+            <LogoButton icon="pi-compass" path="/goals" />
         </div>
     );
 }
 
-export const LogoButton = ({ icon, onClick }) => {
+export const LogoButton = ({ icon, path }) => {
+    const navigate = useNavigate();
+    const onButtonClick = (e) => {
+        navigate(path);
+    }
     return (
         <Button
-            onClick={onClick}
+            onClick={onButtonClick}
             rounded
             style={{ background: 'white', borderColor: 'white' }}
             icon={() => <i className={"pi " + icon} style={{ color: '#FF6200', fontSize: '1.5em' }}></i>}>
