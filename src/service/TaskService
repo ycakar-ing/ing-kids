@@ -1,0 +1,54 @@
+export const TaskService = {
+  getTasksData() {
+    return [
+      {
+        id: "1000",
+        name: "Bla bla bla",
+        points: 10,
+        status: "ongoing",
+        icon: "pi pi-angle-double-up",
+      },
+      {
+        id: "1001",
+        name: "Clean your room",
+        points: 15,
+        status: "pending",
+        icon: "pi pi-clock",
+      },
+      {
+        id: "1002",
+        name: "Read book",
+        points: 25,
+        status: "completed",
+        icon: "pi pi-check-circle",
+      },
+    ];
+  },
+
+  getTasksData2() {
+    return [
+      {
+        id: "1000",
+        name: "Solve 1000 problems",
+        points: 100,
+        status: "ongoing",
+        icon: "pi pi-angle-double-up",
+      },
+      {
+        id: "1001",
+        name: "asdasdas asdasdas",
+        points: 150,
+        status: "pending",
+        icon: "pi pi-clock",
+      },
+    ];
+  },
+
+  getTasksMini() {
+    return Promise.resolve(this.getTasksData().slice(0, 5));
+  },
+
+  getAdditionalTasks() {
+    return Promise.resolve(this.getTasksData2().slice(0, 5));
+  },
+};
