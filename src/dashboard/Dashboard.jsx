@@ -1,11 +1,50 @@
 import { Card } from 'primereact/card';
 import { useState, useEffect } from 'react';
-import { Divider } from 'primereact/divider';
 import { Chart } from 'primereact/chart';
+import { BalanceCard } from '../common/Main'
 import { PERSONAL_EXPENSE, PIGGY_BANK, SOCIAL_EXPENSE } from '../common/Constants';
 
-export const Dashboard = () => {
+export const ChildDashboard = () => {
+    return <Dashboard isParent={false} />
+}
 
+
+export const ParentDashboard = () => {
+    return <Dashboard isParent={false} />
+}
+
+
+export const Dashboard = ({isParent}) => {
+
+    const [piggyBank,setPiggyBank] = useState([]);
+    const [personalExpense,setPersonalExpense] = useState([]);
+    const [socialExpense,setSocialExpense] = useState([]);
+
+    const divStyle = {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '20px'
+    }
+
+    return (
+        <div style={divStyle}>
+            <Card title={isParent ? "My Kids Info" : "My Account Info"}>
+                <h2><b>Total Balance : 1400 $</b></h2>
+            </Card>
+            <DashboardSummary />
+            
+            <BalanceCard header={PIGGY_BANK} value={piggyBank} />
+            
+            <BalanceCard header={PERSONAL_EXPENSE} value={personalExpense} />
+            
+            <BalanceCard header={SOCIAL_EXPENSE} value={socialExpense} />
+            
+        </div>
+    )
+}
+
+
+export const DashboardSummary = () => {
     const [chartData, setChartData] = useState({});
     const [chartOptions, setChartOptions] = useState({});
 
@@ -25,21 +64,18 @@ export const Dashboard = () => {
             ]
         };
         const options = {
-            cutout: '60%'
+            //cutout: '60%'
         };
 
         setChartData(data);
         setChartOptions(options);
     }, []);
-
-
     return (
-        <>
-            <Card>
-                <Chart type="doughnut" data={chartData} options={chartOptions} />
-            </Card>
-            <Divider />
-        </>
-    )
+        <Card title="Monthly Balance Summary">
+            <Chart type="pie" data={chartData} options={chartOptions} />
+        </Card>
+    );
 }
+
+
 

@@ -1,3 +1,5 @@
 export const Notifications = () => {
-    return (<p>Notifications</p>);
+    return (
+        <p>Notifications</p>
+    );
 }

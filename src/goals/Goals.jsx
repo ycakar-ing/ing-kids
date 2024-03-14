@@ -92,7 +92,8 @@ export const Goals = () => {
     const onNewGoalSubmit = (e) => {
         let newApplorvaoGoal = {
             id: 5,
-            description: newGoalValue
+            description: newGoalValue,
+            budget: 50
         }
         approvalGoals.push(newApplorvaoGoal);
         setApprovalGoals([...approvalGoals]);
