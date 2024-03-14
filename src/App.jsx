@@ -34,7 +34,7 @@ const App = () => {
           <Route path="/dashboard" element={<Dashboard isParent={isParent} />} />
           <Route path="/tasks" element={<Tasks />} />
           <Route path="/goals" element={<Goals />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile" element={<Profile isParent={isParent} />} />
           <Route path="/notifications" element={<Notifications />} />
         </Routes>
       </div>
