@@ -1,0 +1,15 @@
+:root {
+    --primary-color: #ff6200;
+  }
+
+.p-button{
+    background-color: var(--primary-color);
+}
+
+.p-inputswitch.p-inputswitch-checked .p-inputswitch-slider{
+    background-color: var(--primary-color);
+}
+
+.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link{
+    background-color: var(--primary-color);
+}
