@@ -41,7 +41,7 @@ const App = () => {
           <Route path="/dashboard" element={<Dashboard isParent={isParent} setHeaderMode={setHeaderMode} />} />
           <Route path="/tasks" element={<Tasks isParent={isParent} />} />
           <Route path="/goals" element={<Goals isParent={isParent} />} />
-          <Route path="/profile" element={<Profile setHeaderMode={setHeaderMode} />} />
+          <Route path="/profile" element={<Profile isParent={isParent} setHeaderMode={setHeaderMode} />} />
           <Route path="/notifications" element={<Notifications setHeaderMode={setHeaderMode} />} />
         </Routes>
       </div>
