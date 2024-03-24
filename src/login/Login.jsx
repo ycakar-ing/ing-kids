@@ -9,8 +9,11 @@ import logo from "../assets/logo_kid-ing.png"
 import logo1 from "../assets/ing_org.png"
 import { Divider } from "primereact/divider";
 import {InputSwitch} from "primereact/inputswitch";
+import { HEADER_MODE_MAIN } from "../App";
 
-export const Login = ({ afterLogin }) => {
+export const Login = ({ afterLogin,setHeaderMode }) => {
+
+    setHeaderMode(HEADER_MODE_MAIN);
 
     const [username, setUsername] = useState('');
     const [password, setPassowrd] = useState('');

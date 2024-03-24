@@ -8,6 +8,7 @@ import { Card } from "primereact/card";
 import { Row } from "../common/Main";
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
+import { HEADER_MODE_MAIN } from "../App";
 
 export const Tasks = ({ isParent }) => {
     if (isParent) {

@@ -9,12 +9,13 @@ import { useNavigate } from 'react-router-dom';
 import React, { useRef } from 'react';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
+import { HEADER_MODE_MAIN } from '../App';
 
 
 
 
 export const Goals = ({ isParent }) => {
-    console.log(isParent);
+    
     let emptyGoal = {
         id: null,
         description: '',
