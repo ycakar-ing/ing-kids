@@ -9,29 +9,88 @@ import { useNavigate } from 'react-router-dom';
 import React, { useRef } from 'react';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
+import { HEADER_MODE_MAIN } from '../App';
 
 
 
-export const Goals = () => {
+
+export const Goals = ({ isParent }) => {
+    
+    let emptyGoal = {
+        id: null,
+        description: '',
+        budget: null
+    };
 
     const [visible, setVisible] = useState(false);
-
-    const [activeGoalVisible, setActiveGoalVisible] = useState(false);
 
     const [value, setValue] = useState(90);
 
     const [newGoalValue, setNewGoalValue] = useState('set new goal');
 
+    const [confirmCheckoutDialogue, setConfirmCheckoutDialogue] = useState(false);
+    const [parentDialog, setParentDialog] = useState(false);
+
+    const [goal, setGoal] = useState(null);
+
+    const toast = useRef(null);
+
+    const actionBodyTemplate = (rowData) => {
+        const onButtonClick = () => {
+            console.log('here');
+            confirmCheckoutGoal(rowData);
+        }
+        return (
+            <React.Fragment>
+                <Button icon="pi pi-pencil" rounded outlined className="mr-2" onClick={onButtonClick} />
+            </React.Fragment>
+        );
+    };
+
+    const confirmCheckoutGoal = (activeGoals) => {
+        setGoal(activeGoals);
+        console.log(activeGoals.description);
+        setConfirmCheckoutDialogue(true);
+    };
+
+    const hideConfirmCheckoutDialogue = () => {
+        setConfirmCheckoutDialogue(false);
+    };
+
+    const onCheckoutCoin = (e) => {
+        let newValue = value - goal.budget;
+        setValue(newValue);
+        deleteGoal();
+    }
+
+    const deleteGoal = () => {
+        let _activeGoalList = activeGoals.filter((val) => val.id !== goal.id);
+
+        setActiveGoals(_activeGoalList);
+        hideConfirmCheckoutDialogue();
+        setGoal(emptyGoal);
+    };
+
+    const onNewGoalSubmit = (e) => {
+        let newApplorvaoGoal = {
+            id: 5,
+            description: newGoalValue
+        }
+        approvalGoals.push(newApplorvaoGoal);
+        setApprovalGoals([...approvalGoals]);
+        setVisible(false);
+    }
+
     const [approvalGoals, setApprovalGoals] = useState([
         {
             id: 1,
             description: "Playstation 5",
-            budget: "-"
+            budget: 0
         },
         {
             id: 2,
             description: "Lego",
-            budget: "-"
+            budget: 0
 
         }
     ]);
@@ -40,12 +99,12 @@ export const Goals = () => {
         {
             id: 1,
             description: "Red Dead Redemption",
-            budget: "45 c"
+            budget: 45
         },
         {
             id: 2,
             description: "Baldur's Gate",
-            budget: "60 c"
+            budget: 60
 
         }
     ]);
@@ -54,62 +113,55 @@ export const Goals = () => {
         {
             id: 1,
             description: "t-shirt",
-            budget: "5 c"
+            budget: 5
         },
         {
             id: 2,
             description: "Headphones",
-            budget: "13 c"
+            budget: 13
 
         },
         {
             id: 3,
             description: "Mouse",
-            budget: "21 c"
+            budget: 21
         },
         {
             id: 4,
             description: "trouser",
-            budget: "5 c"
+            budget: 5
         },
         {
             id: 5,
             description: "cardigan",
-            budget: "5 c"
+            budget: 5
         },
         {
             id: 6,
             description: "t-shirt",
-            budget: "5 c"
+            budget: 5
         },
         {
             id: 7,
             description: "t-shirt",
-            budget: "5 c"
+            budget: 5
         },
     ]);
 
-    const onNewGoalSubmit = (e) => {
-        let newApplorvaoGoal = {
-            id: 5,
-            description: newGoalValue,
-            budget: 50
-        }
-        approvalGoals.push(newApplorvaoGoal);
-        setApprovalGoals([...approvalGoals]);
-        setVisible(false);
-    }
 
     return (
         <>
             <Card title="Total Coins">
-                <Knob value={value} onChange={(e) => setValue(e.value)} size={200} />
-                <div className="card flex justify-content-center">
-                    <Button label="Add New Goal" icon="pi pi-plus" onClick={() => setVisible(true)} />
-                    <Dialog header="Add New Goal" visible={visible} style={{ width: '50vw' }} onHide={() => setVisible(false)}>
-                        <InputText value={newGoalValue} onChange={(e) => setNewGoalValue(e.target.value)} />
-                        <Button label="Submit Goal" icon="pi pi-check" onClick={onNewGoalSubmit} />
-                    </Dialog>
+                <div style={{ textAlign: 'center' }}>
+                    <Knob value={value} onChange={(e) => setValue(e.value)} size={200} style={{ textAlign: 'center' }} />
+                    <div className="card flex justify-content-center">
+                        {!isParent ? <Button label="Add New Goal" icon="pi pi-plus" onClick={() => setVisible(true)} /> : null}
+
+                        <Dialog header="Add New Goal" visible={visible} style={{ width: '50vw' }} onHide={() => setVisible(false)}>
+                            <InputText value={newGoalValue} onChange={(e) => setNewGoalValue(e.target.value)} />
+                            <Button label="Submit Goal" icon="pi pi-check" onClick={onNewGoalSubmit} />
+                        </Dialog>
+                    </div>
                 </div>
             </Card>
             <Divider />
@@ -117,30 +169,59 @@ export const Goals = () => {
                 <DataTable value={approvalGoals} paginator rows={5}>
                     <Column field="description" header="Goal"></Column>
                     <Column field="budget" header="Coins"></Column>
+                    {isParent ?
+                        <Column header="Actions" body={(item) => {
+                            const onSubmit = () => {
+                                let newList = approvalGoals.filter(it => it.id != item.id);
+                                setApprovalGoals(newList);
+                            }
+                            return (<Button label='Submit' onClick={onSubmit} />)
+                        }}></Column>
+                        : null}
                 </DataTable>
             </Card>
             <Divider />
             <Card title="Active Goals">
-                <DataTable value={activeGoals} paginator rows={5} selectionMode={'checkbox'} selection={activeGoals} dataKey="id" tableStyle={{ minWidth: '50rem' }}>
-                    <Column selectionMode="multiple" headerStyle={{ width: '3rem' }}></Column>
-                    <Column field="description" header="Goal"></Column>
-                    <Column field="budget" header="Coins"></Column>
-                </DataTable>
-                <Button label="Submit" icon="pi pi-check" onClick={() => setActiveGoalVisible(true)} />
-                <Dialog header="Submit Choice" visible={activeGoalVisible} style={{ width: '50vw' }} onHide={() => setActiveGoalVisible(false)}>
-                    <p>Would you like to continue?</p>
-                    <Button label="Submit Request" icon="pi pi-check" />
+                <Dialog visible={confirmCheckoutDialogue} style={{ width: '32rem' }} onHide={hideConfirmCheckoutDialogue} >
+                    <div className="confirmation-content">
+                        <p>Are you sure?</p>
+                        <Button label="Check out coins" icon="pi pi-check" onClick={onCheckoutCoin} />
+                    </div>
                 </Dialog>
-
-            </Card>
-            <Divider />
-            <Card title="History">
-                <DataTable value={historicGoals} paginator rows={5}>
+                <Dialog visible={parentDialog} style={{ width: '32rem' }} onHide={(e) => setParentDialog(false)} >
+                    <div className="confirmation-content">
+                        <p>Did you visit our partners shop for the prize?</p>
+                        <p>Do you want to check ING loan products ?</p>
+                        <Button label="Yes" icon="pi pi-check" onClick={(e) => setParentDialog(false)} />
+                    </div>
+                </Dialog>
+                <DataTable value={activeGoals} paginator rows={5}>
                     <Column field="description" header="Goal"></Column>
                     <Column field="budget" header="Coins"></Column>
+                    {isParent 
+                        ? <Column header="Action" body={(item)=>{
+                            return(
+                                <Button label="Approve" onClick={(e)=>setParentDialog(true)}/>
+                            )
+                        }} />
+                        : <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '12rem' }}></Column>}
+                    
                 </DataTable>
-            </Card>
 
+
+            </Card>
+            {!isParent ?
+                <>
+                    <Divider />
+                    <Card title="History">
+                        <DataTable value={historicGoals} paginator rows={5}>
+                            <Column field="description" header="Goal"></Column>
+                            <Column field="budget" header="Coins"></Column>
+                        </DataTable>
+                    </Card>
+                </>
+                : null
+            }
             <Divider />
 
 

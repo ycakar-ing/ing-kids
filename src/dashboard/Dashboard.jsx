@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { Chart } from 'primereact/chart';
 import { BalanceCard } from '../common/Main'
 import { PERSONAL_EXPENSE, PIGGY_BANK, SOCIAL_EXPENSE } from '../common/Constants';
+import { HEADER_MODE_MAIN } from '../App';
 
 export const ChildDashboard = () => {
     return <Dashboard isParent={false} />
@@ -14,7 +15,9 @@ export const ParentDashboard = () => {
 }
 
 
-export const Dashboard = ({isParent}) => {
+export const Dashboard = ({isParent,setHeaderMode}) => {
+
+    setHeaderMode(HEADER_MODE_MAIN);
 
     const [piggyBank,setPiggyBank] = useState([]);
     const [personalExpense,setPersonalExpense] = useState([]);
